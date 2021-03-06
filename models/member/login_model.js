@@ -285,6 +285,7 @@ let generateUser = function(resolve, fbRes)
             return generateUser(resolve, fbRes);
         }
 
+        console.log("gg " + fbRes);
          // 獲取client端資料
          const memberData = {
             account: fbRes.id,
