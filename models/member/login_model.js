@@ -282,7 +282,7 @@ let generateUser = function(resolve, fbRes)
         
         if(rows.length > 0)
         {
-            return generateUser();
+            return generateUser(resolve, fbRes);
         }
 
          // 獲取client端資料
