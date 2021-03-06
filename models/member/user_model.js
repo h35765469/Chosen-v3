@@ -1,5 +1,6 @@
 //此class專門拿到玩家所有買過的商店用品
 
+const { resolve } = require('bluebird');
 const db = require('../connection_db');
 module.exports.getUserBuyProductData = function (userId) {
     return new Promise((resolve, reject) => {
@@ -11,5 +12,14 @@ module.exports.getUserBuyProductData = function (userId) {
             }
             resolve(rows);
         });
+    });
+}
+
+//購買虛擬貨幣
+module.exports.postBuyVirtualMoneyData = function (userId)
+{
+    return new Promise((resolve, reject) =>
+    {
+        db.query('')
     });
 }
