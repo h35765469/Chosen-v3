@@ -274,7 +274,7 @@ let getGoogleProfile = function(accessToken) {
 let gen_token = function()
 {
     const token  = encryption.getReToken(encryption.getReRandomId() + Date.now());
-    console.log('fuck ' + token);
+
     db.query('SELECT * FROM user WHERE token = ?', token, function (err, rows) {
         
         if(rows.length > 0)
@@ -282,6 +282,7 @@ let gen_token = function()
             return gen_token();
         }
         
+        console.log('fuck ' + token);
         return token;
     });
 }
