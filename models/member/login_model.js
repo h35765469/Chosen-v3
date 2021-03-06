@@ -276,9 +276,6 @@ let gen_token = function()
     const token  = encryption.getReToken(encryption.getReRandomId() + Date.now());
     console.log('fuck ' + token);
     db.query('SELECT * FROM user WHERE token = ?', token, function (err, rows) {
-        if (err) {
-            return gen_token();
-        }
         
         if(rows.length > 0)
         {
