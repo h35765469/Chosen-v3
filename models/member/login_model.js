@@ -181,7 +181,7 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                     resolve(ReturnCodeConfig.response('0000', '登入成功', '', rows[0]));
                 } else {
                     let genToken = gen_token();
-                    console.log("fuck " + genToken);
+                    console.log("veneable " + genToken);
                     // 獲取client端資料
                     const memberData = {
                         account: fbRes.id,
