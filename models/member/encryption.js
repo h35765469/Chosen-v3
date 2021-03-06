@@ -13,7 +13,7 @@ module.exports = function getRePassword(password) {
 module.exports.getReToken = function(token)
 {
     //加密
-    let hashToken = crypto.createHash('sha2');
+    let hashToken = crypto.createHash('sha1');
     hashToken.update(token);
     const reToken = hashToken.digest('hex');
     //   console.log('rePassword: ' + rePassword);
