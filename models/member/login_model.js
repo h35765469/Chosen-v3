@@ -273,7 +273,7 @@ let getGoogleProfile = function(accessToken) {
 
 let gen_token = function()
 {
-    const token  = encryption.getReToken(encryption.getRandomId() + Date.now());
+    const token  = encryption.getReToken(encryption.getReRandomId() + Date.now());
     let result = {};
     return new Promise((resolve, reject) => {
         // 找尋

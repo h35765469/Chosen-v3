@@ -21,7 +21,7 @@ module.exports = function getReToken(token)
 }
 
 //產出隨機id
-module.exports = function getRandomId()
+module.exports = function getReRandomId()
 {
     return crypto.randomBytes(16).toString("hex");;
 }
