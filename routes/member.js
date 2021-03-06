@@ -121,6 +121,8 @@ router.post('/auth/facebook', memberModifyMethod.postLoginOAuth)
 // });
 router.post('/auth/google', memberModifyMethod.postLoginOAuth)
 
+router.post('/member/input_name', memberModifyMethod.postInputNickname)
+
 
 let getGoogleProfile = function(accessToken) {
     return new Promise((resolve, reject) => {
