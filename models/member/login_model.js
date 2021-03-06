@@ -279,14 +279,12 @@ let gen_token = function()
         // 找尋
         db.query('SELECT * FROM user WHERE token = ?', token, function (err, rows) {
             if (err) {
-                gen_token();
-                return;
+                return gen_token();
             }
             
             if(rows.length > 0)
             {
-                gen_token();
-                return;
+                return gen_token();
             }
             
             return token;
