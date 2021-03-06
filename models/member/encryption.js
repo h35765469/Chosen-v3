@@ -10,7 +10,7 @@ module.exports = function getRePassword(password) {
 }
 
 //產出token
-module.exports = function getReToken(token)
+module.exports.getReToken = function(token)
 {
     //加密
     let hashToken = crypto.createHash('sha2');
@@ -21,7 +21,7 @@ module.exports = function getReToken(token)
 }
 
 //產出隨機id
-module.exports = function getReRandomId()
+module.exports.getReRandomId = function()
 {
     return crypto.randomBytes(16).toString("hex");;
 }
