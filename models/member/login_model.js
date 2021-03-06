@@ -279,11 +279,12 @@ let gen_token = function()
 
     db.query('SELECT * FROM user WHERE token = ?', token, function (err, rows) {
         
-        // if(rows.length > 0)
-        // {
-        //     return gen_token();
-        // }
+        if(rows.length > 0)
+        {
+            return gen_token();
+        }
         
+        console.log("fuck " + token);
         return token;
     });
 }
