@@ -180,6 +180,7 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                 if (rows.length >= 1) {
                     resolve(ReturnCodeConfig.response('0000', '登入成功', '', rows[0]));
                 } else {
+                    generateUser(fbRes)
                     // let genToken = gen_token();
                     
                     // // 獲取client端資料
@@ -273,7 +274,7 @@ let getGoogleProfile = function(accessToken) {
     });
 }
 
-let generateUser = function()
+let generateUser = function(resolve, fbRes)
 {
     const token  = encryption.getReToken(encryption.getReRandomId() + Date.now());
 
