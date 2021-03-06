@@ -180,7 +180,7 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                 if (rows.length >= 1) {
                     resolve(ReturnCodeConfig.response('0000', '登入成功', '', rows[0]));
                 } else {
-                    generateUser(fbRes)
+                    generateUser(resolve, fbRes);
                     // let genToken = gen_token();
                     
                     // // 獲取client端資料
@@ -285,7 +285,6 @@ let generateUser = function(resolve, fbRes)
             return generateUser(resolve, fbRes);
         }
 
-        console.log("gg " + fbRes);
          // 獲取client端資料
          const memberData = {
             account: fbRes.id,
