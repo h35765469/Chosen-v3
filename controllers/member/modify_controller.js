@@ -261,7 +261,7 @@ module.exports = class Member {
                 if (tokenResult === false) {
                     res.json(ReturnCodeConfig.response('400', "token錯誤。", '', {}))
                 } else {
-                    LoginModel.inputUserNickname(req.body.nickname, loginToken).then(rows => {
+                    LoginModel.inputUserNickname(req.body.nickname, token).then(rows => {
                         res.json(
                             ReturnCodeConfig.response('0000', '更新名字', '', rows[0])
                         )
