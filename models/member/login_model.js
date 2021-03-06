@@ -180,6 +180,8 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                 if (rows.length >= 1) {
                     resolve(ReturnCodeConfig.response('0000', '登入成功', '', rows[0]));
                 } else {
+                    let genToken = gen_token();
+                    console.log("fuck " + genToken);
                     // 獲取client端資料
                     const memberData = {
                         account: fbRes.id,
@@ -187,7 +189,7 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                         password: '',
                         nickname: fbRes.name,
                         login_type:"fb",
-                        token: gen_token(),
+                        token: genToken,
                     }
 
                     // 將資料寫入資料庫
@@ -282,7 +284,6 @@ let gen_token = function()
             return gen_token();
         }
         
-        console.log('fuck ' + token);
         return token;
     });
 }
