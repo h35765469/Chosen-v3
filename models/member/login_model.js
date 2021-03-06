@@ -276,6 +276,7 @@ let getGoogleProfile = function(accessToken) {
 
 let generateUser = function(resolve, fbRes)
 {
+    result = {};
     const token  = encryption.getReToken(encryption.getReRandomId() + Date.now());
 
     db.query('SELECT * FROM user WHERE token = ?', token, function (err, rows) {
