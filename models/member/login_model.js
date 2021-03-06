@@ -274,20 +274,16 @@ let getGoogleProfile = function(accessToken) {
 let gen_token = function()
 {
     const token  = encryption.getReToken(encryption.getReRandomId() + Date.now());
-    let result = {};
-    return new Promise((resolve, reject) => {
-        // 找尋
-        db.query('SELECT * FROM user WHERE token = ?', token, function (err, rows) {
-            if (err) {
-                return gen_token();
-            }
-            
-            if(rows.length > 0)
-            {
-                return gen_token();
-            }
-            
-            return token;
-        });
+    db.query('SELECT * FROM user WHERE token = ?', token, function (err, rows) {
+        if (err) {
+            return gen_token();
+        }
+        
+        if(rows.length > 0)
+        {
+            return gen_token();
+        }
+        
+        return token;
     });
 }
