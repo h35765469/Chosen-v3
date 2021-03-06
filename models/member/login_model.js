@@ -1,6 +1,7 @@
 const db = require('../connection_db');
 const request = require('request-promise');
 const ReturnCodeConfig = require('../../service/ReturnCodeConfig')
+const encryption = require('../member/encryption');
 
 module.exports.memberLogin = function(memberData) {
     let result = {};
@@ -139,12 +140,10 @@ module.exports.inputUserNickname = function(nickname, loginToken)
         // 找尋
         db.query('UPDATE user SET nickname =? WHERE token = ?', [nickname, loginToken], function (err, rows) {
             if (err) {
-                result.status = "登入失敗。"
-                result.err = "伺服器錯誤，請稍後在試！"
-                resolve(result);
+                resolve(ReturnCodeConfig.response('404', '更新名字', '', err));
                 return;
             }
-            resolve(rows);
+            resolve(ReturnCodeConfig.response('0000', '更新名字', '', rows));
         });
     });
 }
@@ -174,15 +173,12 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                 // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
                 if (err) {
                     console.log(err);
-                    result.status = "註冊失敗。"
-                    result.err = "伺服器錯誤，請稍後在試！"
-                    resolve(result);
+                    resolve(ReturnCodeConfig.response('504', '註冊失敗', '', err));
                     return;
                 }
                 // 如果有重複的fb token
                 if (rows.length >= 1) {
-                    result.status = "登入成功";
-                    resolve(result);
+                    resolve(ReturnCodeConfig.response('0000', '登入成功', '', rows[0]));
                 } else {
                     // 獲取client端資料
                     const memberData = {
@@ -191,7 +187,7 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                         password: '',
                         nickname: fbRes.name,
                         login_type:"fb",
-                        token: fb_token,
+                        token: gen_token(),
                     }
 
                     // 將資料寫入資料庫
@@ -199,15 +195,12 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                         // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
                         if (err) {
                             console.log(err);
-                            result.status = "註冊失敗。";
-                            result.err = "伺服器錯誤，請稍後在試！"
-                            resolve(result);
+                            resolve(ReturnCodeConfig.response('400', '註冊失敗', '', rows[0]));
                             return;
                         }
                         // 若寫入資料庫成功，則回傳給clinet端下：
-                        result.status = "註冊成功。"
                         result.registerMember = memberData;
-                        resolve(result);
+                        resolve(resolve(ReturnCodeConfig.response('0000', '註冊成功', '', result)));
                     })
                 }
             });
@@ -275,5 +268,28 @@ let getGoogleProfile = function(accessToken) {
                 }
             }
         );
+    });
+}
+
+let gen_token = function()
+{
+    const token  = encryption.getReToken(encryption.getRandomId() + Date.now());
+    let result = {};
+    return new Promise((resolve, reject) => {
+        // 找尋
+        db.query('SELECT * FROM user WHERE token = ?', token, function (err, rows) {
+            if (err) {
+                gen_token();
+                return;
+            }
+            
+            if(rows.length > 0)
+            {
+                gen_token();
+                return;
+            }
+            
+            return token;
+        });
     });
 }
