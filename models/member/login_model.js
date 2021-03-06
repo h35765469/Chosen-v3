@@ -180,30 +180,30 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                 if (rows.length >= 1) {
                     resolve(ReturnCodeConfig.response('0000', '登入成功', '', rows[0]));
                 } else {
-                    let genToken = gen_token();
-                    console.log("veneable " + genToken);
-                    // 獲取client端資料
-                    const memberData = {
-                        account: fbRes.id,
-                        email: fbRes.email,
-                        password: '',
-                        nickname: fbRes.name,
-                        login_type:"fb",
-                        token: genToken,
-                    }
+                    // let genToken = gen_token();
+                    
+                    // // 獲取client端資料
+                    // const memberData = {
+                    //     account: fbRes.id,
+                    //     email: fbRes.email,
+                    //     password: '',
+                    //     nickname: fbRes.name,
+                    //     login_type:"fb",
+                    //     token: genToken,
+                    // }
 
-                    // 將資料寫入資料庫
-                    db.query('INSERT INTO user SET ?', memberData, function (err, rows) {
-                        // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
-                        if (err) {
-                            console.log(err);
-                            resolve(ReturnCodeConfig.response('400', '註冊失敗', '', rows[0]));
-                            return;
-                        }
-                        // 若寫入資料庫成功，則回傳給clinet端下：
-                        result.registerMember = memberData;
-                        resolve(resolve(ReturnCodeConfig.response('0000', '註冊成功', '', result)));
-                    })
+                    // // 將資料寫入資料庫
+                    // db.query('INSERT INTO user SET ?', memberData, function (err, rows) {
+                    //     // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
+                    //     if (err) {
+                    //         console.log(err);
+                    //         resolve(ReturnCodeConfig.response('400', '註冊失敗', '', rows[0]));
+                    //         return;
+                    //     }
+                    //     // 若寫入資料庫成功，則回傳給clinet端下：
+                    //     result.registerMember = memberData;
+                    //     resolve(resolve(ReturnCodeConfig.response('0000', '註冊成功', '', result)));
+                    // })
                 }
             });
         });
@@ -273,7 +273,7 @@ let getGoogleProfile = function(accessToken) {
     });
 }
 
-let gen_token = function()
+let generateUser = function()
 {
     const token  = encryption.getReToken(encryption.getReRandomId() + Date.now());
 
@@ -281,10 +281,32 @@ let gen_token = function()
         
         if(rows.length > 0)
         {
-            return gen_token();
+            return generateUser();
         }
+
+         // 獲取client端資料
+         const memberData = {
+            account: fbRes.id,
+            email: fbRes.email,
+            password: '',
+            nickname: fbRes.name,
+            login_type:"fb",
+            token: token,
+        }
+
+        // 將資料寫入資料庫
+        db.query('INSERT INTO user SET ?', memberData, function (err, rows) {
+            // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
+            if (err) {
+                console.log(err);
+                resolve(ReturnCodeConfig.response('400', '註冊失敗', '', rows[0]));
+                return;
+            }
+            // 若寫入資料庫成功，則回傳給clinet端下：
+            result.registerMember = memberData;
+            resolve(resolve(ReturnCodeConfig.response('0000', '註冊成功', '', result)));
+        })
         
-        console.log("fuck " + token);
         return token;
     });
 }
