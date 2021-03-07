@@ -253,15 +253,15 @@ module.exports = class Member {
         console.log("fuck " + token);
         //確定token是否有輸入
         if (check.checkNull(token) === true) {
-            res.json(ReturnCodeConfig.response('0000', '請輸入token', '', {}))
+            res.json(ReturnCodeConfig.response('504', '請輸入token', '', {}))
         } else if (check.checkNull(token) === false) {
-            verify(token).then(tokenResult => {
+            verify.verifyTokenInDataBase(token).then(tokenResult => {
                 if (tokenResult === false) {
                     res.json(ReturnCodeConfig.response('400', "token錯誤。", '', {}))
                 } else {
-                    LoginModel.inputUserNickname(req.body.nickname, token).then(rows => {
+                    LoginModel.inputUserNickname(req.body.nickname, token).then(response => {
                         res.json(
-                            ReturnCodeConfig.response('0000', '更新名字', '', rows[0])
+                            response
                         )
                     });
                 }
