@@ -178,8 +178,8 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                 }
                 // 如果有重複的fb token
                 if (rows.length >= 1) {
-                    row = row[0]
-                    result = 
+                    const row = row[0]
+                    const result = 
                     {
                         nickname: row.nickname,
                         money: row.money,
