@@ -250,7 +250,6 @@ module.exports = class Member {
     //輸入暱稱
     postInputNickname(req, res, next) {
         const token = req.headers['token'];
-        console.log("fuck " + token);
         //確定token是否有輸入
         if (check.checkNull(token) === true) {
             res.json(ReturnCodeConfig.response('504', '請輸入token', '', {}))
