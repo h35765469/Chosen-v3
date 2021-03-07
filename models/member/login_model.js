@@ -178,12 +178,11 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                 }
                 // 如果有重複的fb token
                 if (rows.length >= 1) {
-                    const row = row[0]
                     const result = 
                     {
-                        nickname: row.nickname,
-                        money: row.money,
-                        userToken:row.token,
+                        nickname: rows[0].nickname,
+                        money: rows[0].money,
+                        userToken:rows[0].token,
                     };
                     resolve(ReturnCodeConfig.response('0000', '登入成功', '', result));
                 } else {
