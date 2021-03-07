@@ -122,15 +122,14 @@ module.exports = class Member {
         var loginToken = req.body.oauthToken;
         
         //loginAction.memberLoginOAuth(loginType, loginToken)
-        LoginModel.memberLoginOAuth(loginType, loginToken).then(rows => {
-            if (check.checkNull(rows) === true) {
+        LoginModel.memberLoginOAuth(loginType, loginToken).then(response => {
+            if (check.checkNull(response) === true) {
                 res.json(ReturnCodeConfig.response('404', '登入失敗。', '', {}));
-            } else if (check.checkNull(rows) === false) {
+            } else if (check.checkNull(response) === false) {
 
                 //res.setHeader('token', rows[0].token);
-                console.log("aesthetically " + rows);
                 res.json(
-                    ReturnCodeConfig.response('0000', '登入成功。', '', rows)
+                    response
                 )
             }
         });
