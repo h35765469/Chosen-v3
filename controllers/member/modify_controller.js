@@ -128,9 +128,9 @@ module.exports = class Member {
             } else if (check.checkNull(rows) === false) {
 
                 //res.setHeader('token', rows[0].token);
-                console.log("aesthetically " + rows[0]);
+                console.log("aesthetically " + rows);
                 res.json(
-                    ReturnCodeConfig.response('0000', '登入成功。', '', rows[0])
+                    ReturnCodeConfig.response('0000', '登入成功。', '', rows)
                 )
             }
         });
