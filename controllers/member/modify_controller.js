@@ -127,7 +127,8 @@ module.exports = class Member {
                 res.json(ReturnCodeConfig.response('404', '登入失敗。', '', {}));
             } else if (check.checkNull(rows) === false) {
 
-                res.setHeader('token', rows[0].token);
+                //res.setHeader('token', rows[0].token);
+                console.log("aesthetically " + rows[0]);
                 res.json(
                     ReturnCodeConfig.response('0000', '登入成功。', '', rows[0])
                 )
