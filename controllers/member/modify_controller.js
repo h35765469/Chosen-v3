@@ -127,6 +127,7 @@ module.exports = class Member {
                 res.json(ReturnCodeConfig.response('404', '登入失敗。', '', {}));
             } else if (check.checkNull(response) === false) {
 
+                console.log("fuck " + response);
                 //res.setHeader('token', rows[0].token);
                 res.json(
                     response
