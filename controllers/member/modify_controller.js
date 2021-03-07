@@ -127,10 +127,7 @@ module.exports = class Member {
                 res.json(ReturnCodeConfig.response('404', '登入失敗。', '', {}));
             } else if (check.checkNull(rows) === false) {
 
-                //加
-                // res.setHeader('token', rows[0].token);
-                //=======
-
+                res.setHeader('token', rows[0].token);
                 res.json(
                     ReturnCodeConfig.response('0000', '登入成功。', '', rows[0])
                 )
