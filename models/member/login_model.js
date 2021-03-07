@@ -184,7 +184,6 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                         money: rows[0].money,
                         userToken:rows[0].token,
                     };
-                    console.log("gg " + result.userToken);
                     resolve(ReturnCodeConfig.response('0000', '登入成功', '', result));
                 } else {
                     generateUser(resolve, fbRes);
@@ -298,7 +297,7 @@ let generateUser = function(resolve, fbRes)
             account: fbRes.id,
             email: fbRes.email,
             password: '',
-            nickname: fbRes.name,
+            nickname: '',
             login_type:"fb",
             token: token,
         }
