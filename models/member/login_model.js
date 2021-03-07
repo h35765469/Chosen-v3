@@ -178,7 +178,14 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                 }
                 // 如果有重複的fb token
                 if (rows.length >= 1) {
-                    resolve(ReturnCodeConfig.response('0000', '登入成功', '', rows[0]));
+                    row = row[0]
+                    result = 
+                    {
+                        nickname: row.nickname,
+                        money: row.money,
+                        userToken:row.token,
+                    };
+                    resolve(ReturnCodeConfig.response('0000', '登入成功', '', result));
                 } else {
                     generateUser(resolve, fbRes);
                     // let genToken = gen_token();
@@ -305,7 +312,12 @@ let generateUser = function(resolve, fbRes)
                 return;
             }
             // 若寫入資料庫成功，則回傳給clinet端下：
-            result.registerMember = memberData;
+            result = 
+            {
+                nickname: "",
+                money: 0,
+                userToken: token,
+            };
             resolve(resolve(ReturnCodeConfig.response('0000', '註冊成功', '', result)));
         })
         
