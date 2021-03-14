@@ -1,5 +1,7 @@
 const db = require('../connection_db');
 
+const ReturnCodeConfig = require('../../service/ReturnCodeConfig')
+
 module.exports = function getProductData(memberData) {
     let result = {};
     return new Promise((resolve, reject) => {
