@@ -8,14 +8,12 @@ module.exports.getUser = function(userId)
 {
     return new Promise((resolve, reject) => {
         //獲取玩家基本基料。
-        db.query('SELECT nickname, money FROM user WHERE id = ?', userId, function (err, rows) {
+        db.query('SELECT nickname, money FROM user WHERE id = ? LIMIT 1', userId, function (err, rows) {
             if (err) {
                 reject(ReturnCodeConfig.response('504', '獲取資料失敗', 'none', err));
                 return;
             }
-            var result = {};
-            result.user_products = rows;
-            resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', result));
+            resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', rows));
         });
     });
 }
