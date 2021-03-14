@@ -13,7 +13,10 @@ module.exports.getUser = function(userId)
                 reject(ReturnCodeConfig.response('504', '獲取資料失敗', 'none', err));
                 return;
             }
-            resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', rows));
+            var result = {};
+            result.nickname = rows[0].nickname;
+            result.money = rows[0].money;
+            resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', result));
         });
     });
 }
