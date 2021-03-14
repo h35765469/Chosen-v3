@@ -4,6 +4,22 @@ const { resolve } = require('bluebird');
 const db = require('../connection_db');
 const ReturnCodeConfig = require('../../service/ReturnCodeConfig')
 
+module.exports.getUser = function(userId)
+{
+    return new Promise((resolve, reject) => {
+        //獲取玩家基本基料。
+        db.query('SELECT nickname, money FROM user WHERE id = ?', userId, function (err, rows) {
+            if (err) {
+                reject(ReturnCodeConfig.response('504', '獲取資料失敗', 'none', err));
+                return;
+            }
+            var result = {};
+            result.user_products = rows;
+            resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', result));
+        });
+    });
+}
+
 module.exports.getUserBuyProductData = function (userId) {
     return new Promise((resolve, reject) => {
         //獲取玩家所有購買造型。
