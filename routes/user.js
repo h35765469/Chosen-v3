@@ -10,6 +10,8 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+router.get('/user_data', userGetController.getUser)
+
 router.get('/user_buy_product', userGetController.getUserBuyProduct)
 
 module.exports = router;
