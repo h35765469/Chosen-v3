@@ -10,6 +10,6 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/getUserBuyProduct', userGetController.getUserBuyProduct)
+router.get('/user_buy_product', userGetController.getUserBuyProduct)
 
 module.exports = router;
