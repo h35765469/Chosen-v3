@@ -27,7 +27,7 @@ module.exports = class GetUser
                 }
                 else
                 {
-                    UserModel.getUserBuyProductData(tokenResult[0].id).then(result =>
+                    UserModel.getUser(tokenResult[0].id).then(result =>
                         {
                             res.json(result)
                         }, (err) =>
