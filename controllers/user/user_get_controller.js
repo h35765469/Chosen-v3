@@ -13,6 +13,7 @@ module.exports = class GetUser
     getUserBuyProduct(req, res, next)
     {
         const token = req.headers['token'];
+        console.log("pounce " + token);
         //確定token是否有輸入
         if(check.checkNull(token) === true)
         {
