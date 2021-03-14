@@ -18,15 +18,12 @@ module.exports = class GetProduct {
     //獲得所有商店販售商品
     getShopProduct(req, res, next)
     {
+      const token = req.headers['token'];
       ProductData.getShopProductData().then(result => {
-          res.json({
-            data:result
-          })
+          res.json(result)
         }, (err) => 
         {
-          res.json({
-              result:err
-          })
+          res.json(result)
         })
     }
 }
