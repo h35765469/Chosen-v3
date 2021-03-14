@@ -50,12 +50,10 @@ module.exports = class GetUser
                 {
                     UserModel.getUserBuyProductData(tokenResult[0].id).then(result =>
                         {
-                            res.json(ReturnCodeConfig.response('0000', 'success', '', result))
+                            res.json(result)
                         }, (err) =>
                         {
-                            res.json({
-                                result: err
-                            })
+                            res.json(result)
                         })
                 }
             });
