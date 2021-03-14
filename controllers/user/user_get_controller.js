@@ -9,6 +9,37 @@ var check = new Check();
 
 module.exports = class GetUser 
 {
+    //獲得玩家基本資料
+    getUser(req, res, next)
+    {
+        const token = req.headers['token'];
+        //確定token是否有輸入
+        if(check.checkNull(token) === true)
+        {
+            res.json(ReturnCodeConfig.response(400, "請輸入token！", "", {}))
+        }
+        else 
+        {
+            VerificationModel.verifyTokenInDataBase(token).then(tokenResult => {
+                if(tokenResult === false)
+                {
+                    res.json(ReturnCodeConfig.response(400, "token失誤", "", {}))
+                }
+                else
+                {
+                    UserModel.getUserBuyProductData(tokenResult[0].id).then(result =>
+                        {
+                            res.json(result)
+                        }, (err) =>
+                        {
+                            res.json(result)
+                        })
+                }
+            });
+        }
+    }
+
+
     //獲得玩家買得所有商品
     getUserBuyProduct(req, res, next)
     {
