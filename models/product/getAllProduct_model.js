@@ -38,7 +38,7 @@ module.exports.getShopProductData = function()
                 return;
             }
             // 若資料庫部分沒問題，則回傳全部產品資料。
-            resolve(ReturnCodeConfig.response('504', '獲取資料失敗', 'none', rows));
+            resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', rows));
         });
     });
 }
