@@ -62,7 +62,7 @@ module.exports.getShopProductData = function()
                 products.push(row);
                 block.products = products;
                 tempBlocks[row.sale_type] = block;
-                console.log("temp " + row.type + " " + block.title + " " + block.products + " " + tempBlocks[row.sale_type].length)
+                console.log("temp " + row.sale_type + " " + block.title + " " + block.products + " " + tempBlocks[row.sale_type].length)
             }
             result.product_blocks = tempBlocks;
             // 若資料庫部分沒問題，則回傳全部產品資料。
