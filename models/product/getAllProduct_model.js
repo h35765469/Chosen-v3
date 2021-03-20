@@ -62,9 +62,13 @@ module.exports.getShopProductData = function()
                 products.push(row);
                 block.products = products;
                 tempBlocks[row.sale_type] = block;
-                console.log("temp " + row.sale_type + " " + block.title + " " + block.products + " " + tempBlocks[row.sale_type].length)
+                console.log("temp " + row.sale_type + " " + block.title + " " + block.products + " " + tempBlocks[row.sale_type])
             }
-            result.product_blocks = tempBlocks;
+            var product_blocks = [];
+            for (const [key, value] of Object.entries(tempBlocks)) {
+                product_blocks.push(value);
+            }
+            result.product_blocks = product_blocks;
             // 若資料庫部分沒問題，則回傳全部產品資料。
             resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', result));
         });
