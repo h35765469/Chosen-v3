@@ -27,7 +27,7 @@ module.exports.getShopProductData = function()
     return new Promise((resolve, reject) =>
     {
         db.query('SELECT product.id as product_id, product.product_category_id, product.name, product.price, product.preview_img_url, product.description, product.skin_id, ' +
-        'product_onsale_schedule.type AS sale_type, ' + 'product_onsale_schedule.start_ts, ' + 'product_onsale_schedule.end_ts ' +   
+        'product_onsale_schedule.type AS sale_type, ' + 'product_onsale_schedule.end_ts ' +   
         'FROM product INNER JOIN product_onsale_schedule ON product.id = product_onsale_schedule.product_id WHERE product_onsale_schedule.start_ts < now() AND product_onsale_schedule.end_ts > now()', 
         function(err, rows)
         {
@@ -40,8 +40,9 @@ module.exports.getShopProductData = function()
             var result = {};
             var tempBlocks = [];
             console.log("rows " + rows.length)
-            for(var row in rows)
+            for(i =0; i < rows.length; i++)
             {
+                var row = rows[i]
                 console.log("row " + row)
                 if(tempBlocks[row.sale_type] != null)
                 {
