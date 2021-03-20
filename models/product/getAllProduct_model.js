@@ -38,12 +38,12 @@ module.exports.getShopProductData = function()
                 return;
             }
             var result = {};
-            var product_blocks = [];
+            var tempBlocks = [];
             for(var row in rows)
             {
-                if(product_blocks[row.sale_type] != null)
+                if(tempBlocks[row.sale_type] != null)
                 {
-                    product_blocks[row.sale_type].products.push(row)
+                    tempBlocks[row.sale_type].products.push(row)
                     continue;
                 }
                 var block = {};
@@ -58,8 +58,9 @@ module.exports.getShopProductData = function()
                 var products = [];
                 products.push(row);
                 block.products = products;
+                tempBlocks[row.sale_type] = block;
             }
-            result.product_blocks = product_blocks;
+            result.product_blocks = tempBlocks;
             // 若資料庫部分沒問題，則回傳全部產品資料。
             resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', result));
         });
