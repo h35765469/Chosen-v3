@@ -18,8 +18,8 @@ module.exports.getUser = function(userId)
             result.money = rows[0].money;
 
             //獲取玩家所選造型。
-            db.query("SELECT product.id, product.product_category_id, product.name, product.preview_img_url, product.description FROM product" +
-            "INNER JOIN user_select_product ON product.id = user_select_product.product_id" + 
+            db.query("SELECT product.id, product.product_category_id, product.name, product.preview_img_url, product.description FROM product " +
+            "INNER JOIN user_select_product ON product.id = user_select_product.product_id " + 
             "WHERE user_select_product.user_id = ?", userId, function (err, rows) {
                 if (err) {
                     reject(ReturnCodeConfig.response('504', '獲取資料失敗', 'none', err));
