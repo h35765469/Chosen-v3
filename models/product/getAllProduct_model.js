@@ -39,11 +39,9 @@ module.exports.getShopProductData = function()
             }
             var result = {};
             var tempBlocks = {};
-            console.log("rows " + rows.length)
             for(i =0; i < rows.length; i++)
             {
                 var row = rows[i]
-                console.log("row " + row)
                 if(tempBlocks[row.sale_type] != null)
                 {
                     delete row.sale_type
