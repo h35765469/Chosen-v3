@@ -44,8 +44,9 @@ module.exports.getShopProductData = function()
                 var row = rows[i]
                 if(tempBlocks[row.sale_type] != null)
                 {
+                    var sale_type = row.sale_type
                     delete row.sale_type
-                    tempBlocks[row.sale_type].products.push(row)
+                    tempBlocks[sale_type].products.push(row)
                     continue;
                 }
                 var block = {};
@@ -62,7 +63,7 @@ module.exports.getShopProductData = function()
                 delete row.sale_type
                 products.push(row);
                 block.products = products;
-                tempBlocks[row.sale_type] = block;
+                tempBlocks[block.sale_type] = block;
             }
             var product_blocks = [];
             for (const [key, value] of Object.entries(tempBlocks)) {
