@@ -28,7 +28,6 @@ module.exports.getUser = function(userId)
                 result.selected_locker_products = rows;
                 resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', result));
             });
-            resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', result));
         });
     });
 }
