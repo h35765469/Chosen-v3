@@ -39,8 +39,10 @@ module.exports.getShopProductData = function()
             }
             var result = {};
             var tempBlocks = [];
+            console.log("rows " + rows.length)
             for(var row in rows)
             {
+                console.log("row " + row)
                 if(tempBlocks[row.sale_type] != null)
                 {
                     tempBlocks[row.sale_type].products.push(row)
@@ -59,6 +61,7 @@ module.exports.getShopProductData = function()
                 products.push(row);
                 block.products = products;
                 tempBlocks[row.sale_type] = block;
+                console.log("temp " + tempBlocks[row.sale_type].length)
             }
             result.product_blocks = tempBlocks;
             // 若資料庫部分沒問題，則回傳全部產品資料。
