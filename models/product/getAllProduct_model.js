@@ -38,7 +38,28 @@ module.exports.getShopProductData = function()
                 return;
             }
             var result = {};
-            result.products = rows;
+            var product_blocks = [];
+            for(var row in rows)
+            {
+                if(product_blocks[row.type] != null)
+                {
+                    product_blocks[row.type].products.push(row)
+                    continue;
+                }
+                var block = {};
+                if(row.type == "daily")
+                {
+                    block.title = "Daily Items"
+                }
+                else if(row.type == "featured")
+                {
+                    block.title = "Featured Items"
+                }
+                var products = [];
+                products.push(row);
+                block.products = products;
+            }
+            result.product_blocks = product_blocks;
             // 若資料庫部分沒問題，則回傳全部產品資料。
             resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', result));
         });
