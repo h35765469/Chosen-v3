@@ -27,7 +27,7 @@ module.exports.getShopProductData = function()
     return new Promise((resolve, reject) =>
     {
         db.query('SELECT product.id as product_id, product.product_category_id, product.name, product.price, product.preview_img_url, product.description, product.skin_id, ' +
-        'product_onsale_schedule.end_ts ' +   
+        'product_onsale_schedule.type as sale_type, ' + 'product_onsale_schedule.end_ts ' +   
         'FROM product INNER JOIN product_onsale_schedule ON product.id = product_onsale_schedule.product_id WHERE product_onsale_schedule.start_ts < now() AND product_onsale_schedule.end_ts > now()', 
         function(err, rows)
         {
@@ -41,17 +41,17 @@ module.exports.getShopProductData = function()
             var product_blocks = [];
             for(var row in rows)
             {
-                if(product_blocks[row.type] != null)
+                if(product_blocks[row.sale_type] != null)
                 {
-                    product_blocks[row.type].products.push(row)
+                    product_blocks[row.sale_type].products.push(row)
                     continue;
                 }
                 var block = {};
-                if(row.type == "daily")
+                if(row.sale_type == "daily")
                 {
                     block.title = "Daily Items"
                 }
-                else if(row.type == "featured")
+                else if(row.sale_type == "featured")
                 {
                     block.title = "Featured Items"
                 }
