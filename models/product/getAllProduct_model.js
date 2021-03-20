@@ -38,7 +38,7 @@ module.exports.getShopProductData = function()
                 return;
             }
             var result = {};
-            var tempBlocks = [];
+            var tempBlocks = {};
             console.log("rows " + rows.length)
             for(i =0; i < rows.length; i++)
             {
