@@ -27,7 +27,7 @@ module.exports.getShopProductData = function()
     return new Promise((resolve, reject) =>
     {
         db.query('SELECT product.id as product_id, product.product_category_id, product.name, product.price, product.preview_img_url, product.description, product.skin_id, ' +
-        'product_onsale_schedule.type AS sale_type, ' + 'product_onsale_schedule.end_ts ' +   
+        'product_onsale_schedule.type, ' + 'product_onsale_schedule.end_ts ' +   
         'FROM product INNER JOIN product_onsale_schedule ON product.id = product_onsale_schedule.product_id WHERE product_onsale_schedule.start_ts < now() AND product_onsale_schedule.end_ts > now()', 
         function(err, rows)
         {
@@ -62,7 +62,7 @@ module.exports.getShopProductData = function()
                 products.push(row);
                 block.products = products;
                 tempBlocks[row.sale_type] = block;
-                console.log("temp " + row.sale_type + " " + block.title + " " + block.products + " " + tempBlocks[row.sale_type].length)
+                console.log("temp " + row.type + " " + block.title + " " + block.products + " " + tempBlocks[row.sale_type].length)
             }
             result.product_blocks = tempBlocks;
             // 若資料庫部分沒問題，則回傳全部產品資料。
