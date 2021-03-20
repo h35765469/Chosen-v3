@@ -46,6 +46,7 @@ module.exports.getShopProductData = function()
                 console.log("row " + row)
                 if(tempBlocks[row.sale_type] != null)
                 {
+                    delete row.sale_type
                     tempBlocks[row.sale_type].products.push(row)
                     continue;
                 }
@@ -58,11 +59,12 @@ module.exports.getShopProductData = function()
                 {
                     block.title = "Featured Items"
                 }
+                block.sale_type = row.sale_type
                 var products = [];
+                delete row.sale_type
                 products.push(row);
                 block.products = products;
                 tempBlocks[row.sale_type] = block;
-                console.log("temp " + row.sale_type + " " + block.title + " " + block.products + " " + tempBlocks[row.sale_type])
             }
             var product_blocks = [];
             for (const [key, value] of Object.entries(tempBlocks)) {
