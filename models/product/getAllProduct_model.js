@@ -21,7 +21,7 @@ module.exports = function getProductData(memberData) {
 }
 
 //獲得所有這時間上架到商店的商品
-module.exports.getShopProductData = function()
+module.exports.getShopProductData = function(userData)
 {
     let result = {};
     return new Promise((resolve, reject) =>
@@ -46,6 +46,13 @@ module.exports.getShopProductData = function()
                 {
                     var sale_type = row.sale_type
                     delete row.sale_type
+                    //判別錢是否足夠購買=====================
+                    row.purchase_button_status = "enough"
+                    if(row.price > userData.money)
+                    {
+                        row.purchase_button_status = "notEnough"
+                    }
+                    //==========================
                     tempBlocks[sale_type].products.push(row)
                     continue;
                 }
@@ -61,6 +68,13 @@ module.exports.getShopProductData = function()
                 block.sale_type = row.sale_type
                 var products = [];
                 delete row.sale_type
+                //判別錢是否足夠購買=====================
+                row.purchase_button_status = "enough"
+                if(row.price > userData.money)
+                {
+                    row.purchase_button_status = "notEnough"
+                }
+                //==========================
                 products.push(row);
                 block.products = products;
                 tempBlocks[block.sale_type] = block;
