@@ -30,12 +30,14 @@ module.exports = class ModifyPurchase {
                         }
                         else
                         {
+                            console.log("fuck " + result.price);
                             const purchaseShopProductData = {
                                 user_id: tokenResult[0].id,
                                 product_id: req.body.productID,
                                 user_remain_money: tokenResult[0].money - result.price
                             }
                             PurchaseShopProductModel.purchaseShopProduct(purchaseShopProductData).then(result => {
+                                console.log("pshchosis " + result)
                                 res.json(result)
                             }, (err) => {
                                 res.json({
