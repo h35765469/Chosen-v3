@@ -35,7 +35,7 @@ module.exports.verifyTokenInDataBase = function(token)
         //判斷token是否正確
         if (token) {
            //獲取在資料庫的token資料檢驗並回傳user id。
-            db.query('SELECT id FROM user WHERE token = ?', token, function (err, rows) {
+            db.query('SELECT id, money FROM user WHERE token = ?', token, function (err, rows) {
                 
                 if (err) {
                     // result.status = "登入失敗。"
