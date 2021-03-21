@@ -6,6 +6,8 @@ const ReturnCodeConfig = require('../../service/ReturnCodeConfig')
 
 check = new Check();
 
+const GetAllProductModel = require('../../models/product/getAllProduct_model');
+
 module.exports = class ModifyPurchase {
     //購買商店商品
     postPurchaseShopProduct(req, res, next) {
@@ -20,12 +22,26 @@ module.exports = class ModifyPurchase {
                 if (tokenResult === false) {
                     res.json(ReturnCodeConfig.response(504, 'token 錯誤', '', {}))
                 } else {
-                    const purchaseShopProductData = {
-                        user_id: tokenResult[0].id,
-                        product_id: req.body.productID,
-                    }
-                    PurchaseShopProductModel.purchaseShopProduct(purchaseShopProductData).then(result => {
-                        res.json(ReturnCodeConfig.response('0000', '購買成功', '', {}))
+                    GetAllProductModel.getShopProductDataById(req.body.productID).then(result => {
+                        
+                        if(result.price > tokenResult[0].money)
+                        {
+                            res.json(ReturnCodeConfig.response('404', 'Not Enough Money', 'none', {}))
+                        }
+                        else
+                        {
+                            const purchaseShopProductData = {
+                                user_id: tokenResult[0].id,
+                                product_id: req.body.productID,
+                            }
+                            PurchaseShopProductModel.purchaseShopProduct(purchaseShopProductData).then(result => {
+                                res.json(ReturnCodeConfig.response('0000', '購買成功', '', {}))
+                            }, (err) => {
+                                res.json({
+                                    result: err
+                                })
+                            })
+                        }
                     }, (err) => {
                         res.json({
                             result: err
