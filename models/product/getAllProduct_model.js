@@ -101,11 +101,11 @@ module.exports.getShopProductDataById = function(productId)
             // 若資料庫部分出現問題，則回傳「伺服器錯誤，請稍後再試！」的結果。
             if (err) {
                 console.log(err);
-                reject(ReturnCodeConfig.response('504', '獲取資料失敗', 'none', err));
+                reject(err);
                 return;
             }
             // 若資料庫部分沒問題，則回傳全部產品資料。
-            resolve(ReturnCodeConfig.response('0000', '獲取資料成功', 'none', rows[0]));
+            resolve(rows[0]);
         });
     });
 }
