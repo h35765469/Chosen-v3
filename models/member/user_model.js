@@ -66,6 +66,7 @@ module.exports.postSelectedLockerProductData = function (selectedLockerProductDa
                 reject(ReturnCodeConfig.response('504', 'fail change skin', 'none', err));
                 return;
             }
+            console.log("altruistically " + rows.length);
             if(rows.length > 0)
             {
                 db.query('UPDATE user_select_product ' + 
