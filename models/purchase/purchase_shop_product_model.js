@@ -5,23 +5,28 @@ module.exports.purchaseShopProduct = function(data) {
     let result = {};
   
     return new Promise(async (resolve, reject) => {
-        const userProductData = {
-            user_id: data.user_id,
-            product_id: data.product_id
-        };
 
-        db.query('INSERT INTO user_product_list SET ?', userProductData, function(err, rows)
-        {
-            if(err)
-            {
-                console.log(err);
-                result.err = "伺服器錯誤，請稍後再試!"
-                reject(result);
+        //扣除資料庫user money
+        db.query('UPDATE user SET money = ? WHERE id = ?', [data.user_remain_money, data.user_id], function (err, rows) {
+            if (err) {
+                reject(ReturnCodeConfig.response('404', '購買失敗', 'none', err));
                 return;
             }
-        })
 
-        result.state = "購買成功";
-        resolve(result);
+            const userProductData = {
+                user_id: data.user_id,
+                product_id: data.product_id
+            };
+    
+            db.query('INSERT INTO user_product_list SET ?', userProductData, function(err, rows)
+            {
+                if(err)
+                {
+                    reject(ReturnCodeConfig.response('404', '購買失敗', 'none', err));
+                    return;
+                }
+                resolve(ReturnCodeConfig.response('404', '購買失敗', 'none', {}));
+            })
+        })
     })
   }
