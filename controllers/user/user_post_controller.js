@@ -40,4 +40,42 @@ module.exports = class PostUser
             });
         }
     }
+
+    //更換角色造型
+    postSelectedLockerProduct()
+    {
+        const token = req.headers['token'];
+        //確定token是否有輸入
+        if(check.checkNull(token) === true)
+        {
+            res.json(ReturnCodeConfig.response(400, "請輸入token！", "", {}))
+        }
+        else 
+        {
+            VerificationModel.verifyTokenInDataBase(token).then(tokenResult => {
+                if(tokenResult === false)
+                {
+                    res.json(ReturnCodeConfig.response(400, "token失誤", "", {}))
+                }
+                else
+                {
+                    var selectedLockerProductData = 
+                    {
+                        user_id: tokenResult[0].id,
+                        product_id: req.body.productID,
+                        product_type: req.body.productType
+                    }
+                    UserModel.postSelectedLockerProductData(selectedLockerProductData).then(result =>
+                        {
+                            res.json(ReturnCodeConfig.response('0000', 'success', '', result))
+                        }, (err) =>
+                        {
+                            res.json({
+                                result: err
+                            })
+                        })
+                }
+            });
+        }
+    }
 }
