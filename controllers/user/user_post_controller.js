@@ -62,8 +62,8 @@ module.exports = class PostUser
                     var selectedLockerProductData = 
                     {
                         user_id: tokenResult[0].id,
-                        product_id: req.body.productID,
-                        product_type: req.body.productType
+                        product_id: req.body.productId,
+                        product_category_id: req.body.product_category_id
                     }
                     UserModel.postSelectedLockerProductData(selectedLockerProductData).then(result =>
                         {
