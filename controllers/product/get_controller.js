@@ -30,7 +30,11 @@ module.exports = class GetProduct {
                 if (tokenResult === false) {
                     res.json(ReturnCodeConfig.response(504, 'token 錯誤', '', {}))
                 } else {
-                  ProductData.getShopProductData().then(result => {
+                  const userData = {
+                    id: tokenResult[0].id,
+                    money: tokenResult[0].money
+                  }
+                  ProductData.getShopProductData(userData).then(result => {
                     res.json(result)
                   }, (err) => 
                   {
