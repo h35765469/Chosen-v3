@@ -61,7 +61,7 @@ module.exports.postSelectedLockerProductData = function (selectedLockerProductDa
 {
     return new Promise((resolve, reject) => {
 
-        db.query('SELECT * from user_select_product WHERE user_id = ? AND product_type = ?', [selectedLockerProductData.user_id, selectedLockerProductData.product_type], function (err, rows) {
+        db.query('SELECT * from user_select_product WHERE user_id = ? AND product_category_id = ?', [selectedLockerProductData.user_id, selectedLockerProductData.product_category_id], function (err, rows) {
             if (err) {
                 reject(ReturnCodeConfig.response('504', 'fail change skin', 'none', err));
                 return;
@@ -70,7 +70,7 @@ module.exports.postSelectedLockerProductData = function (selectedLockerProductDa
             {
                 db.query('UPDATE user_select_product ' + 
                 'SET product_id = ? ' +  
-                'WHERE user_id = ? AND product_type = ?', [selectedLockerProductData.user_id, selectedLockerProductData.product_type], function (err, rows) {
+                'WHERE user_id = ? AND product_category_id = ?', [selectedLockerProductData.user_id, selectedLockerProductData.product_category_id], function (err, rows) {
                     if (err) {
                         reject(ReturnCodeConfig.response('504', 'fail change skin', 'none', err));
                         return;
