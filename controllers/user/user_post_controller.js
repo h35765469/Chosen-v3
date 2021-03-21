@@ -42,7 +42,7 @@ module.exports = class PostUser
     }
 
     //更換角色造型
-    postSelectedLockerProduct()
+    postSelectedLockerProduct(req, res, next)
     {
         const token = req.headers['token'];
         //確定token是否有輸入
