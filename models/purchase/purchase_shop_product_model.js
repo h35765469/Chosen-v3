@@ -1,4 +1,5 @@
 const db = require('../connection_db');
+const ReturnCodeConfig = require('../../service/ReturnCodeConfig')
 
 module.exports.purchaseShopProduct = function(data) {
     //購買商店商品
