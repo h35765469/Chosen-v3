@@ -70,7 +70,7 @@ module.exports.postSelectedLockerProductData = function (selectedLockerProductDa
             {
                 db.query('UPDATE user_select_product ' + 
                 'SET product_id = ? ' +  
-                'WHERE user_id = ? AND product_category_id = ?', [selectedLockerProductData.user_id, selectedLockerProductData.product_category_id], function (err, rows) {
+                'WHERE user_id = ? AND product_category_id = ?', [selectedLockerProductData.product_id, selectedLockerProductData.user_id, selectedLockerProductData.product_category_id], function (err, rows) {
                     if (err) {
                         reject(ReturnCodeConfig.response('504', 'fail change skin', 'none', err));
                         return;
