@@ -66,10 +66,8 @@ module.exports.postSelectedLockerProductData = function (selectedLockerProductDa
                 reject(ReturnCodeConfig.response('504', 'fail change skin', 'none', err));
                 return;
             }
-            console.log("altruistically " + rows.length);
             if(rows.length > 0)
             {
-                console.log("fortness " + rows.length);
                 db.query('UPDATE user_select_product ' + 
                 'SET product_id = ? ' +  
                 'WHERE user_id = ? AND product_category_id = ?', [selectedLockerProductData.product_id, selectedLockerProductData.user_id, selectedLockerProductData.product_category_id], function (err, rows) {
@@ -82,16 +80,18 @@ module.exports.postSelectedLockerProductData = function (selectedLockerProductDa
                     return;
                 });
             }
-            console.log("salmon " + rows.length);
-            db.query('INSERT INTO user_select_product SET ?', selectedLockerProductData, function (err, rows) {
-                    if (err) {
-                        reject(ReturnCodeConfig.response('504', 'fail change skin', 'none', err));
+            else
+            {
+                db.query('INSERT INTO user_select_product SET ?', selectedLockerProductData, function (err, rows) {
+                        if (err) {
+                            reject(ReturnCodeConfig.response('504', 'fail change skin', 'none', err));
+                            return;
+                        }
+                        var result = {};
+                        resolve(ReturnCodeConfig.response('0000', 'change skin successfully', 'none', result));
                         return;
-                    }
-                    var result = {};
-                    resolve(ReturnCodeConfig.response('0000', 'change skin successfully', 'none', result));
-                    return;
-            });
+                });
+            }
         });
     });
 }
