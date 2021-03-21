@@ -16,6 +16,7 @@ router.get('/user_data', userGetController.getUser)
 
 router.get('/user_buy_product', userGetController.getUserBuyProduct)
 
+//更換造型
 router.post('/update_selected_locker_product', userPostController.postSelectedLockerProduct)
 
 module.exports = router;
