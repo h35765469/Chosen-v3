@@ -33,9 +33,10 @@ module.exports = class ModifyPurchase {
                             const purchaseShopProductData = {
                                 user_id: tokenResult[0].id,
                                 product_id: req.body.productID,
+                                user_remain_money: tokenResult[0].money - result.price
                             }
                             PurchaseShopProductModel.purchaseShopProduct(purchaseShopProductData).then(result => {
-                                res.json(ReturnCodeConfig.response('0000', '購買成功', '', {}))
+                                res.json(result)
                             }, (err) => {
                                 res.json({
                                     result: err
