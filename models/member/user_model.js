@@ -55,3 +55,40 @@ module.exports.postBuyVirtualMoneyData = function (userId)
         db.query('')
     });
 }
+
+//更換角色造型
+module.exports.postSelectedLockerProductData = function (selectedLockerProductData)
+{
+    return new Promise((resolve, reject) => {
+
+        db.query('SELECT * from user_select_product WHERE user_id = ? AND product_type = ?', [selectedLockerProductData.user_id, selectedLockerProductData.product_type], function (err, rows) {
+            if (err) {
+                reject(ReturnCodeConfig.response('504', 'fail change skin', 'none', err));
+                return;
+            }
+            if(rows.length > 0)
+            {
+                db.query('UPDATE user_select_product ' + 
+                'SET product_id = ? ' +  
+                'WHERE user_id = ? AND product_type = ?', [selectedLockerProductData.user_id, selectedLockerProductData.product_type], function (err, rows) {
+                    if (err) {
+                        reject(ReturnCodeConfig.response('504', 'fail change skin', 'none', err));
+                        return;
+                    }
+                    var result = {};
+                    resolve(ReturnCodeConfig.response('0000', 'change skin successfully', 'none', result));
+                    return;
+                });
+            }
+            db.query('INSERT INTO user_select_product SET ?', selectedLockerProductData, function (err, rows) {
+                    if (err) {
+                        reject(ReturnCodeConfig.response('504', 'fail change skin', 'none', err));
+                        return;
+                    }
+                    var result = {};
+                    resolve(ReturnCodeConfig.response('0000', 'change skin successfully', 'none', result));
+                    return;
+            });
+        });
+    });
+}
