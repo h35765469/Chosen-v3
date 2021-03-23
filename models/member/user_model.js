@@ -47,6 +47,19 @@ module.exports.getUserBuyProductData = function (userId) {
     });
 }
 
+module.exports.getUserBuyProductDataNoConfig = function (userId) {
+    return new Promise((resolve, reject) => {
+        //獲取玩家所有購買造型。
+        db.query('SELECT product.id, product.product_category_id, product.name, product.preview_img_url, product.description FROM product INNER JOIN user_product_list ON product.id = user_product_list.product_id WHERE user_product_list.user_id = ?', userId, function (err, rows) {
+            if (err) {
+                reject(ReturnCodeConfig.response('504', '獲取資料失敗', 'none', err));
+                return;
+            }
+            resolve(rows);
+        });
+    });
+}
+
 //購買虛擬貨幣
 module.exports.postBuyVirtualMoneyData = function (userId)
 {
