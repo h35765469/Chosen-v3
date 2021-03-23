@@ -84,7 +84,7 @@ module.exports = class GetUser
                             res.json(result)
                         }, (err) =>
                         {
-                            res.json(result)
+                            res.json(err)
                         })
                 }
             });
