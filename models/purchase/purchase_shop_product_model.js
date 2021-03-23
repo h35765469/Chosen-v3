@@ -26,7 +26,7 @@ module.exports.purchaseShopProduct = function(data) {
                     reject(ReturnCodeConfig.response('404', '購買失敗', 'none', err));
                     return;
                 }
-                resolve(ReturnCodeConfig.response('0000', 'success', 'none', {}));
+                resolve(ReturnCodeConfig.response('0000', 'success', 'none', {"user_remain_money": data.user_remain_money}));
             })
         })
     })
