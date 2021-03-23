@@ -53,6 +53,18 @@ module.exports.getShopProductData = function(userData)
                         row.purchase_button_status = "notEnough"
                     }
                     //==========================
+
+                    //判別是否已經買過==============
+                    for(j = 0; j < userData.user_products.length; j++)
+                    {
+                        var user_product = userData.user_products[j]
+                        if(row.product_id == user_product.id)
+                        {
+                            row.purchase_button_status = "owned"
+                            break
+                        }
+                    }
+                    //==========================
                     tempBlocks[sale_type].products.push(row)
                     continue;
                 }
@@ -75,6 +87,18 @@ module.exports.getShopProductData = function(userData)
                     row.purchase_button_status = "notEnough"
                 }
                 //==========================
+                
+                 //判別是否已經買過==============
+                 for(j = 0; j < userData.user_products.length; j++)
+                 {
+                     var user_product = userData.user_products[j]
+                     if(row.product_id == user_product.id)
+                     {
+                         row.purchase_button_status = "owned"
+                         break
+                     }
+                 }
+                 //==========================
                 products.push(row);
                 block.products = products;
                 tempBlocks[block.sale_type] = block;
