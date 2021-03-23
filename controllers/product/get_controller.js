@@ -2,6 +2,8 @@ var ProductData = require('../../models/product/getAllProduct_model');
 var ReturnCodeConfig = require('../../service/ReturnCodeConfig')
 const verify = require('../../models/member/verification_model');
 
+const UserModel = require('../../models/member/user_model');
+
 module.exports = class GetProduct {
     // 取得全部產品資料
     getAllProduct(req, res, next) {
@@ -34,11 +36,19 @@ module.exports = class GetProduct {
                     id: tokenResult[0].id,
                     money: tokenResult[0].money
                   }
-                  ProductData.getShopProductData(userData).then(result => {
-                    res.json(result)
-                  }, (err) => 
+
+                  UserModel.getUserBuyProductDataNoConfig(userData.id).then(result =>
                   {
-                    res.json(err)
+                      userData.user_products = result;
+                      ProductData.getShopProductData(userData).then(result => {
+                        res.json(result)
+                      }, (err) => 
+                      {
+                        res.json(err)
+                      })
+                  }, (err) =>
+                  {
+                      res.json(err)
                   })
                 }
             })
