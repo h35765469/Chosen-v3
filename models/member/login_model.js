@@ -90,7 +90,7 @@ module.exports.memberLoginOAuth = function(loginType, loginToken)
         }
         else if('google' == loginType)
         {
-            goGoogleLogin(loginType, loginToken);
+            goGoogleLogin(resolve, reject, loginType, loginToken);
             // if (!loginToken) {
             //     // res
             //     //   .status(400)
@@ -216,7 +216,7 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
         });
 }
 
-let goGoogleLogin = function(loginType, loginToken)
+let goGoogleLogin = function(resolve, reject, loginType, loginToken)
 {
     if (!loginToken) {
         // res
