@@ -243,11 +243,51 @@ let goGoogleLogin = function(loginType, loginToken)
         //         picture: profile.picture
         //     }
         // });
-        resolve({
-            user: {
-                name: profile.name,
-                email: profile.email,
-                picture: profile.picture
+
+        // 尋找是否有重複的google token
+        db.query('SELECT * FROM user WHERE account = ?', profile.id, function (err, rows) {
+            var result = {};
+            // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
+            if (err) {
+                console.log(err);
+                resolve(ReturnCodeConfig.response('504', '註冊失敗', '', err));
+                return;
+            }
+            // 如果有重複的fb token
+            if (rows.length >= 1) {
+                result = 
+                {
+                    nickname: rows[0].nickname,
+                    money: rows[0].money,
+                    userToken:rows[0].token,
+                };
+                resolve(ReturnCodeConfig.response('0000', '登入成功', '', result));
+            } else {
+                generateGoogleUser(resolve, profile);
+                // let genToken = gen_token();
+                
+                // // 獲取client端資料
+                // const memberData = {
+                //     account: fbRes.id,
+                //     email: fbRes.email,
+                //     password: '',
+                //     nickname: fbRes.name,
+                //     login_type:"fb",
+                //     token: genToken,
+                // }
+
+                // // 將資料寫入資料庫
+                // db.query('INSERT INTO user SET ?', memberData, function (err, rows) {
+                //     // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
+                //     if (err) {
+                //         console.log(err);
+                //         resolve(ReturnCodeConfig.response('400', '註冊失敗', '', rows[0]));
+                //         return;
+                //     }
+                //     // 若寫入資料庫成功，則回傳給clinet端下：
+                //     result.registerMember = memberData;
+                //     resolve(resolve(ReturnCodeConfig.response('0000', '註冊成功', '', result)));
+                // })
             }
         });
     })
@@ -299,6 +339,50 @@ let generateUser = function(resolve, fbRes)
             password: '',
             nickname: '',
             login_type:"fb",
+            token: token,
+        }
+
+        // 將資料寫入資料庫
+        db.query('INSERT INTO user SET ?', memberData, function (err, rows) {
+            // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
+            if (err) {
+                console.log(err);
+                resolve(ReturnCodeConfig.response('400', '註冊失敗', '', rows[0]));
+                return;
+            }
+            // 若寫入資料庫成功，則回傳給clinet端下：
+            result = 
+            {
+                nickname: "",
+                money: 0,
+                userToken: token,
+            };
+            resolve(resolve(ReturnCodeConfig.response('0000', '註冊成功', '', result)));
+        })
+        
+        return token;
+    });
+}
+
+let generateGoogleUser = function(resolve, googleRes)
+{
+    result = {};
+    const token  = encryption.getReToken(encryption.getReRandomId() + Date.now());
+
+    db.query('SELECT * FROM user WHERE token = ?', token, function (err, rows) {
+        
+        if(rows.length > 0)
+        {
+            return generateGoogleUser(resolve, googleRes);
+        }
+
+         // 獲取client端資料
+         const memberData = {
+            account: googleRes.id,
+            email: googleRes.email,
+            password: '',
+            nickname: '',
+            login_type:"google",
             token: token,
         }
 
