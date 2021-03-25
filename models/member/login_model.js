@@ -378,7 +378,7 @@ let generateGoogleUser = function(resolve, googleRes)
 
          // 獲取client端資料
          const memberData = {
-            account: googleRes.id,
+            account: googleRes.kid,
             email: googleRes.email,
             password: '',
             nickname: '',
@@ -391,7 +391,7 @@ let generateGoogleUser = function(resolve, googleRes)
             // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
             if (err) {
                 console.log(err);
-                resolve(ReturnCodeConfig.response('400', '註冊失敗', '', rows[0]));
+                resolve(ReturnCodeConfig.response('400', '註冊失敗', '', err));
                 return;
             }
             // 若寫入資料庫成功，則回傳給clinet端下：
