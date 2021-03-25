@@ -90,7 +90,7 @@ module.exports.memberLoginOAuth = function(loginType, loginToken)
         }
         else if('google' == loginType)
         {
-            goGoogleLogin(resolve, reject, loginType, loginToken);
+            goGoogleLogin(resolve, reject, loginToken);
             // if (!loginToken) {
             //     // res
             //     //   .status(400)
@@ -216,7 +216,7 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
         });
 }
 
-let goGoogleLogin = function(resolve, reject, loginType, loginToken)
+let goGoogleLogin = function(resolve, reject, loginToken)
 {
     if (!loginToken) {
         // res
@@ -245,7 +245,7 @@ let goGoogleLogin = function(resolve, reject, loginType, loginToken)
         // });
 
         // 尋找是否有重複的google token
-        db.query('SELECT * FROM user WHERE account = ?', profile.id, function (err, rows) {
+        db.query('SELECT * FROM user WHERE account = ?', profile.kid, function (err, rows) {
             var result = {};
             // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
             if (err) {
