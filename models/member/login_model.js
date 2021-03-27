@@ -183,6 +183,7 @@ let goFbLogin = function(resolve, reject, loginType, loginToken)
                         nickname: rows[0].nickname,
                         money: rows[0].money,
                         userToken:rows[0].token,
+                        login_type: rows[0].login_type
                     };
                     resolve(ReturnCodeConfig.response('0000', '登入成功', '', result));
                 } else {
@@ -253,13 +254,14 @@ let goGoogleLogin = function(resolve, reject, loginToken)
                 resolve(ReturnCodeConfig.response('504', '註冊失敗', '', err));
                 return;
             }
-            // 如果有重複的fb token
+            // 如果有重複的google token
             if (rows.length >= 1) {
                 result = 
                 {
                     nickname: rows[0].nickname,
                     money: rows[0].money,
                     userToken:rows[0].token,
+                    login_type: rows[0].login_type
                 };
                 resolve(ReturnCodeConfig.response('0000', '登入成功', '', result));
             } else {
@@ -356,6 +358,7 @@ let generateUser = function(resolve, fbRes)
                 nickname: "",
                 money: 0,
                 userToken: token,
+                login_type: "fb"
             };
             resolve(resolve(ReturnCodeConfig.response('0000', '註冊成功', '', result)));
         })
@@ -400,6 +403,7 @@ let generateGoogleUser = function(resolve, googleRes)
                 nickname: "",
                 money: 0,
                 userToken: token,
+                login_type:"google"
             };
             resolve(resolve(ReturnCodeConfig.response('0000', '註冊成功', '', result)));
         })
