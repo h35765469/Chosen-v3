@@ -9,13 +9,9 @@ module.exports = class General {
     //獲得general data
     getGeneral(req, res, next) {
         GeneralData.getGeneralData().then(result => {
-            res.json({
-               result
-            })
+            res.json(result)
         }, (err) => {
-            res.json({
-                err
-            })
+            res.json(err)
         })
     }
 }
